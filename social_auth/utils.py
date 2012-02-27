@@ -95,8 +95,10 @@ def setting(name, default=None):
     SOCIAL_AUTH_SETTING = callable_setting('SOCIAL_AUTH_SETTING')
     """
     ret = getattr(settings, name, default)
-    if hasattr(ret, '__call__'):
-        ret = ret()
+    if callable(ret):
+        argspec = inspect.getargspec(ret)
+        if len(argspec[0])==0:
+            ret = ret()
     return ret
 
 
