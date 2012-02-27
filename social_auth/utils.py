@@ -5,7 +5,7 @@ from collections import defaultdict
 from django.conf import settings
 from django.db.models import Model
 from django.contrib.contenttypes.models import ContentType
-
+import inspect
 
 def sanitize_log_data(secret, data=None, leave_characters=4):
     """
