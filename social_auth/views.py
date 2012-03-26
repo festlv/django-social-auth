@@ -43,7 +43,7 @@ def dsa_view(redirect_name=None):
 
             if not backend:
                 return HttpResponseServerError('Incorrect authentication ' + \
-                                               'service')
+                                               'service or service API settings not available!')
 
             try:
                 return func(request, backend, *args, **kwargs)
