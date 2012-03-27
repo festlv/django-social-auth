@@ -149,6 +149,9 @@ def complete_process(request, backend, *args, **kwargs):
     # pop redirect value before the session is trashed on login()
     redirect_value = request.session.get(REDIRECT_FIELD_NAME, '')
     user = auth_complete(request, backend, *args, **kwargs)
+    inv_code = request.session.get('code', '')
+    inv_type = request.session.get('inv_type', '')
+    
 
     if isinstance(user, HttpResponse):
         return user
@@ -159,6 +162,10 @@ def complete_process(request, backend, *args, **kwargs):
     if user:
         if getattr(user, 'is_active', True):
             login(request, user)
+            request.session['code'] = inv_code
+            request.session['inv_type'] = inv_type
+            from invite_friends.helpers import accept_invite
+            accept_invite(request, user)
             # user.social_user is the used UserSocialAuth instance defined
             # in authenticate process
             social_user = user.social_user
