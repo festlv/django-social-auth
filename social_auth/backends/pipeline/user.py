@@ -48,7 +48,7 @@ def get_username(details, user=None, user_exists=simple_user_exists,
     # Generate a unique username for current user using username
     # as base but adding a unique hash at the end. Original
     # username is cut to avoid any field max_length.
-    while user_exists(username=final_username):
+    while user_exists(username__iexact=final_username):
         username = short_username + uuid4().get_hex()[:uuid_lenght]
         final_username = username_fixer(username)[:USERNAME_MAX_LENGTH]
 
